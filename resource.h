@@ -42,8 +42,7 @@ int _rwrite( int handle, const void *buffer, unsigned int count );
 //
 // Following are the prototypes for the real functions...
 //
-// size_t fwrite( const void *buffer, size_t size, size_t count, FILE
-*stream );
+// size_t fwrite( const void *buffer, size_t size, size_t count, FILE *stream );
 // int _write( int handle, const void *buffer, unsigned int count );
 
 #endif

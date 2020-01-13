@@ -13,11 +13,9 @@
 #include   <io.h>
 #include   <errno.h>
 
-static BOOL     rInitialized = FALSE;       // Indicates if the
-      rlimit structure has been initialized
+static BOOL     rInitialized = FALSE;       // Indicates if the rlimit structure has been initialized
 
-static rlimit_t rlimits[RLIM_NLIMITS];      // Resource limits array
-      - on element for each limit we
+static rlimit_t rlimits[RLIM_NLIMITS];      // Resource limits array - on element for each limit we
                                             // keep track of.
 
 
@@ -58,11 +56,10 @@ void InitializeRlimits()
 //       Currently, if an error occurs, the errno value is returned
 //       rather than -1.  errno is not set.
 //
-///////////////////////////////////////////////////////////////int
-      getrlimit(int resource, struct rlimit *rlp)
+///////////////////////////////////////////////////////////////
+int getrlimit(int resource, struct rlimit *rlp)
 {
-    int   iRet = 0;                     // return value - assume
-success
+    int   iRet = 0;                     // return value - assume success
 
     //
     // If we have not initialized the limits yet, do so now
@@ -94,11 +91,10 @@ success
 //       Currently, if an error occurs, the errno value is returned
 //       rather than -1.  errno is not set.
 //
-///////////////////////////////////////////////////////////////int
-      setrlimit(int resource, const struct rlimit *rlp)
+///////////////////////////////////////////////////////////////
+int setrlimit(int resource, const struct rlimit *rlp)
 {
-    int    iRet = 0;                     // return value - assume
-success
+    int    iRet = 0;                     // return value - assume success
 
     if( !rInitialized )
         InitializeRlimits();
@@ -133,9 +129,8 @@ success
 // resource limit aware.
 //
 //
-///////////////////////////////////////////////////////////////size_t
-      rfwrite( const void *buffer, size_t size, size_t count, FILE 
-      *stream )
+///////////////////////////////////////////////////////////////
+size_t rfwrite( const void *buffer, size_t size, size_t count, FILE *stream)
 {
     long            position;
     size_t          written;
@@ -153,11 +148,9 @@ success
     liPosition = (__int64)position;
 
     //
-    // Check to make sure the write will not exceed the RLIMIT_FSIZE
-limit.
+    // Check to make sure the write will not exceed the RLIMIT_FSIZE limit.
     //
-    if ( (liPosition + liByteCount) > rlimits[RLIMIT_FSIZE].rlim_cur
-)
+    if ( (liPosition + liByteCount) > rlimits[RLIMIT_FSIZE].rlim_cur)
     {
         //
         // report an error
@@ -180,12 +173,12 @@ limit.
 // which is resource aware.
 //
 //
-///////////////////////////////////////////////////////////////int
-      _rwrite( int handle, const void *buffer, unsigned int count )
+///////////////////////////////////////////////////////////////
+int _rwrite( int handle, const void *buffer, unsigned int count )
 {
     long            position;
     DWORD           dwWritten;
-    _int64          liByteCount,
+    __int64          liByteCount,
                     liPosition;
     //
     // Convert the count to a large integer
@@ -199,8 +192,7 @@ limit.
     liPosition = (__int64)position;
 
     //
-    // Check to make sure the write will not exceed the RLIMIT_FSIZE
-limit.
+    // Check to make sure the write will not exceed the RLIMIT_FSIZE limit.
     //
     if ( (liPosition + liByteCount) > rlimits[RLIMIT_FSIZE].rlim_cur
 )
